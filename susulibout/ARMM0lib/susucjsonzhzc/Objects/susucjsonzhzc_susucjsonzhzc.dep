@@ -1,0 +1,17 @@
+Dependencies for Project 'susucjsonzhzc', Target 'susucjsonzhzc': (DO NOT MODIFY !)
+F (..\..\..\susucjsonzhzc\cJSON.c)(0x5B361828)(--c99 -c --cpu Cortex-M0 -g -O0 --apcs=interwork --split_sections -I ..\..\..\susucjsonzhzc -I ..\..\..\baselib-I.\RTE\_susucjsonzhzc-ID:\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\1.5.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F070xB-o .\objects\cjson.o --omf_browse .\objects\cjson.crf --depend .\objects\cjson.d)
+I (D:\Keil_v5\ARM\ARMCC\include\string.h)(0x56FE42DE)
+I (D:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x56FE42DE)
+I (D:\Keil_v5\ARM\ARMCC\include\math.h)(0x56FE42D6)
+I (D:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x56FE42DE)
+I (D:\Keil_v5\ARM\ARMCC\include\float.h)(0x56FE42DE)
+I (D:\Keil_v5\ARM\ARMCC\include\limits.h)(0x56FE42D4)
+I (D:\Keil_v5\ARM\ARMCC\include\ctype.h)(0x56FE42E0)
+I (..\..\..\susucjsonzhzc\cJSON.h)(0x5B36102D)
+F (..\..\..\susucjsonzhzc\cJSON_Utils.c)(0x5B29FE2A)(--c99 -c --cpu Cortex-M0 -g -O0 --apcs=interwork --split_sections -I ..\..\..\susucjsonzhzc -I ..\..\..\baselib-I.\RTE\_susucjsonzhzc-ID:\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\1.5.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F070xB-o .\objects\cjson_utils.o --omf_browse .\objects\cjson_utils.crf --depend .\objects\cjson_utils.d)
+I (D:\Keil_v5\ARM\ARMCC\include\ctype.h)(0x56FE42E0)
+I (D:\Keil_v5\ARM\ARMCC\include\string.h)(0x56FE42DE)
+I (D:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x56FE42DE)
+I (D:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x56FE42DE)
+I (..\..\..\susucjsonzhzc\cJSON_Utils.h)(0x5B34A382)
+I (..\..\..\susucjsonzhzc\cJSON.h)(0x5B36102D)

@@ -1,0 +1,2 @@
+--create .\Objects\..\..\..\MDKlib\MDKsusuprotocolODLPlib.lib
+.\objects\susuprotocolodlplib.o

@@ -1,0 +1,2 @@
+--create .\Objects\..\..\..\MDKlib\MDKcJSON.lib
+.\objects\cjson.o

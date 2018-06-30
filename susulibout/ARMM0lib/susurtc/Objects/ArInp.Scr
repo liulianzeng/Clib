@@ -1,0 +1,2 @@
+--create .\Objects\..\..\..\MDKlib\MDKsusuunixrtc.lib
+.\objects\susuunixrtc.o

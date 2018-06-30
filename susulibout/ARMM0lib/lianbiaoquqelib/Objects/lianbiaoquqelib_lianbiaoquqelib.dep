@@ -1,0 +1,6 @@
+Dependencies for Project 'lianbiaoquqelib', Target 'lianbiaoquqelib': (DO NOT MODIFY !)
+F (..\..\..\lianbiaoquqelib\susuClib_quqe.c)(0x5B3608ED)(--c99 -c --cpu Cortex-M0 -g -O0 --apcs=interwork --split_sections -I ..\..\..\lianbiaoquqelib-I.\RTE\_lianbiaoquqelib-ID:\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\1.5.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F070xB-o .\objects\susuclib_quqe.o --omf_browse .\objects\susuclib_quqe.crf --depend .\objects\susuclib_quqe.d)
+I (..\..\..\lianbiaoquqelib\susuClib_quqe.h)(0x5B360DCC)
+I (D:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x56FE42DE)
+I (D:\Keil_v5\ARM\ARMCC\include\string.h)(0x56FE42DE)
+I (D:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x56FE42DE)
