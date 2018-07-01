@@ -28,6 +28,8 @@ extern "C"
 {
 #endif
 //#include "susuClib_base.h"
+/*****************************define定义************************************/
+
 /* cJSON Types: */
 #define cJSON_False 0
 #define cJSON_True 1
@@ -58,6 +60,28 @@ typedef struct cJSON_Hooks {
       void *(*malloc_fn)(size_t sz);
       void (*free_fn)(void *ptr);
 } cJSON_Hooks;
+/*****************************需要引入的函数********************************/
+//需要输入的函数和变量--均需要在工程其他的地方实现或者赋初值  均采用extern的方式引入
+
+extern void * mycalloc (size_t count,size_t size);
+extern void * mymalloc (size_t size);
+extern void myfree (void *ptr);
+/*  引入函数的默认写法   请写到自己的C函数中
+void * mycalloc (size_t count,size_t size)
+{
+return calloc(count,size);
+}
+void * mymalloc (size_t size)
+{
+return malloc(size);
+}
+void myfree (void *ptr)
+{
+free(ptr);
+}
+*/
+/*****************************需要输出的函数********************************/
+//需要输出的函数  变量的输出必采用extern的方式
 
 /* Supply malloc, realloc and free functions to cJSON */
 extern void cJSON_InitHooks(cJSON_Hooks* hooks);
@@ -132,9 +156,6 @@ extern void cJSON_Minify(char *json);
 void *susu_cjson_malloc(size_t si);
 void susu_cjson_free(void *p);
 
-extern void * mycalloc (size_t count,size_t size);
-extern void * mymalloc (size_t size);
-extern void myfree (void *ptr);
 
 /* Macros for creating things quickly. */
 #define cJSON_AddNullToObject(object,name)		cJSON_AddItemToObject(object, name, cJSON_CreateNull())

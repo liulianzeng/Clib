@@ -1,31 +1,15 @@
+//作者 功能简介 库名称
+//作者 susullz 库名称 base
 #ifndef __QUQE_DEFINE_H
 #define __QUQE_DEFINE_H
-//#include "mico.h"
-////////////////////////////////以下是由数组实现的队列和栈/////////////////////////
+//头文件的包含
 #include <stdlib.h>
 #include <string.h>
-/*
-#define mycalloc(a,b) calloc(a,b)
-#define mymalloc(a) malloc(a)
-#define myfree(a) free(a)
-*/
-
-extern void * mycalloc (size_t count,size_t size);
-extern void * mymalloc (size_t size);
-extern void myfree (void *ptr);
-
-#define mylocknoinit do{myclock(&lock);}while(0)
-#define mylock static int lock;myclock(&lock)
-#define myunlock do{mycunlock(&lock);}while(0)
-
-extern void myclock(int *lock);
-extern void mycunlock(int *lock);
-extern void myasmlock(int *lock);
-extern void myasmunlock(int *lock);
-
-
-//#define printf(...)// printf()
 #include <stdio.h>
+/*****************************define定义************************************/
+
+
+
 
 typedef struct
 {
@@ -36,8 +20,8 @@ typedef struct
     void * next;
 }DATA_t;
 
-typedef struct  
-{  
+typedef struct
+{
     DATA_t data;//队列数据
     DATA_t *head;//队头
     DATA_t *tail;//队尾
@@ -45,10 +29,57 @@ typedef struct
     int maxlength;
 }SeqQueue_t;
 
+/*****************************需要引入的函数********************************/
+//需要输入的函数和变量--均需要在工程其他的地方实现或者赋初值  均采用extern的方式引入
+
+//内存管理
+extern void * mycalloc (size_t count,size_t size);
+extern void * mymalloc (size_t size);
+extern void myfree (void *ptr);
+extern void myfreeall (void);
+
+extern void mylocknoinit(void);
+extern void mylock(void);
+extern void myunlock(void);
+
+/*  引入函数的默认写法   请写到自己的C函数中
+ //内存申请入口
+void * mycalloc (size_t count,size_t size)
+{
+ return calloc(count,size);
+}
+void * mymalloc (size_t size)
+{
+ malloc(size);
+}
+void myfree (void *ptr)
+{
+ free(ptr);
+}
+void myfreeall (void)
+{
+ ;
+}
+ //--引入临界区的入口
+void mylocknoinit(void)
+{
+ myclock(&lock);
+}
+void mylock(void)
+{
+ myclock(&lock);
+}
+void myunlock(void)
+{
+ mycunlock(&lock);
+}
+ */
+/*****************************需要输出的函数********************************/
+//需要输出的函数  变量的输出必采用extern的方式
 extern SeqQueue_t *SeqQueue_tInit(int maxlen);//初始化队列
-extern void SeqQueue_tFree(SeqQueue_t *q);//释放队列 
-extern int SeqQueue_tIsEmpty(SeqQueue_t *q);//队列是否为空，空为0  
-extern int SeqQueue_tIsFull(SeqQueue_t *q);//队列是否为已满，满为1 
+extern void SeqQueue_tFree(SeqQueue_t *q);//释放队列
+extern int SeqQueue_tIsEmpty(SeqQueue_t *q);//队列是否为空，空为0
+extern int SeqQueue_tIsFull(SeqQueue_t *q);//队列是否为已满，满为1
 extern int SeqQueue_tLen(SeqQueue_t *q);//返回队列长度   
 extern int SeqQueue_tIn(SeqQueue_t *q,DATA_t data);//入队 
 extern DATA_t *SeqQueue_tOut(SeqQueue_t *q);//出队 

@@ -1,5 +1,5 @@
 //作者 功能简介 库名称  
-//作者 susullz
+//作者 susullz 库名称 base
 #ifndef __BASE_DEFINE_H
 #define __BASE_DEFINE_H
 //头文件的包含
@@ -53,11 +53,11 @@ void myunlock(void)
 //--引入申请内存的入口
 void * Calloc_input (size_t count,size_t size)
 {
-	calloc(count,size);
+	return calloc(count,size);
 }
 void * Malloc_input (size_t size)
 {
-	malloc(size);
+	return malloc(size);
 }
 void Free_input (void *ptr)
 {
@@ -72,7 +72,7 @@ int print_base(char * info,...)
 	va_start(ap, info);
 	ret = vprintf(info, ap);
 	va_end(ap);
-	return ret
+ return ret;
 }
 */
 /*****************************需要输出的函数********************************/

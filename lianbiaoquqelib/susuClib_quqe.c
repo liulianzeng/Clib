@@ -4,7 +4,7 @@ static int lock;
 SeqQueue_t *SeqQueue_tInit(int maxlen)//初始化队列
 {  
     
-    mylocknoinit;
+    mylocknoinit();
     SeqQueue_t *q;
     if((q=(SeqQueue_t *)mymalloc(sizeof(SeqQueue_t)))!=0)
     {
@@ -13,12 +13,12 @@ SeqQueue_t *SeqQueue_tInit(int maxlen)//初始化队列
         q->tail=0;
 		q->length=0;
         q->maxlength=maxlen;
-        myunlock;
+        myunlock();
         return q;  
     }  
     else
     {
-        myunlock;
+        myunlock();
         return NULL;
     }
         
@@ -28,7 +28,7 @@ void SeqQueue_tFree(SeqQueue_t *q)//释放队列
 {
     DATA_t *resultp=0;
     
-    mylocknoinit;
+    mylocknoinit();
     resultp=&(q->data);
     while(q->length--)
     {
@@ -58,12 +58,12 @@ int SeqQueue_tLen(SeqQueue_t *q)//返回队列长度
 int SeqQueue_tIn(SeqQueue_t *q,DATA_t data)//入队   
 {
     
-    mylocknoinit;
+    mylocknoinit();
     DATA_t * p;
     if(SeqQueue_tIsFull(q))
 	{//判断队列q是否已满，满返回0
         printf("Queue is full!\n");
-        myunlock;
+        myunlock();
         return 0;  
     }
     else
@@ -72,7 +72,7 @@ int SeqQueue_tIn(SeqQueue_t *q,DATA_t data)//入队
         if(p==NULL)
         {
             printf("Can not get the mem,the get length is %d",sizeof(DATA_t));
-            myunlock;
+            myunlock();
             return 0;
         }
         p->previous=q->tail;
@@ -84,7 +84,7 @@ int SeqQueue_tIn(SeqQueue_t *q,DATA_t data)//入队
         p->point=p;
         p->next=0;//printf("\n{0x%08X<-0x%08X->0x%08X}",(int)p->previous,(int)p->point,(int)p->next);
         q->length++;
-        myunlock;
+        myunlock();
         return 1;  
     }  
 }  
@@ -93,12 +93,12 @@ DATA_t *SeqQueue_tOut(SeqQueue_t *q)//出队
 {
     DATA_t *resultp=0;
     
-    mylocknoinit;
+    mylocknoinit();
     resultp=&(q->data);
     if(SeqQueue_tIsEmpty(q))  
     {  
         printf("Queue is empty!\n");//判断队列是否为空，空返回NULL
-        myunlock;
+        myunlock();
         return NULL;  
     }  
     else
@@ -107,7 +107,7 @@ DATA_t *SeqQueue_tOut(SeqQueue_t *q)//出队
         if((q->head==0)||(q->head->point==0))
         {
             printf("error q->head is NULL\n");
-            myunlock;
+            myunlock();
             return NULL;
         }
         memcpy(resultp,q->head,sizeof(DATA_t));
@@ -115,7 +115,7 @@ DATA_t *SeqQueue_tOut(SeqQueue_t *q)//出队
         myfree(resultp->point);
         q->head=q->length?q->head:0;
         q->tail=q->length?q->tail:0;
-        myunlock;
+        myunlock();
         return resultp;
     }  
 }  
@@ -149,38 +149,38 @@ DATA_t *SeqQueue_tTail(SeqQueue_t *q)
 DATA_t *SeqQueue_tPos(SeqQueue_t *q,int posn)
 {
     
-    mylocknoinit;
+    mylocknoinit();
     DATA_t * p=q->head;
     if(SeqQueue_tIsEmpty(q))
     {
         printf("Queue is empty!\n");
-        myunlock;
+        myunlock();
         return NULL;
     }
     else if(posn>=q->length)
     {
         printf("Pos over the length!\n");
-        myunlock;
+        myunlock();
         return NULL;
     }
     else
     {
         while(posn--)
             p=(DATA_t *)p->next;
-        myunlock;
+        myunlock();
         return p;
     }
 }
 //反向入队
-int SeqQueue_tReverseIn(SeqQueue_t *q,DATA_t data)//入队
+int SeqQueue_tReverseIn(SeqQueue_t *q,DATA_t data)//反向入队
 {
     
-    mylocknoinit;
+    mylocknoinit();
     DATA_t * p;
     if(SeqQueue_tIsFull(q))
     {//判断队列q是否已满，满返回0
         printf("Queue is full!\n");
-        myunlock;
+        myunlock();
         return 0;
     }
     else
@@ -189,7 +189,7 @@ int SeqQueue_tReverseIn(SeqQueue_t *q,DATA_t data)//入队
         if(p==NULL)
         {
             printf("Can not get the mem,the get length is %d",sizeof(DATA_t));
-            myunlock;
+            myunlock();
             return 0;
         }
         p->next=q->head;
@@ -201,7 +201,7 @@ int SeqQueue_tReverseIn(SeqQueue_t *q,DATA_t data)//入队
         p->point=p;
         p->previous=0;//printf("{0x%08X<-0x%08X->0x%08X}",(int)p->previous,(int)p->point,(int)p->next);
         q->length++;
-        myunlock;
+        myunlock();
         return 1;
     }
 }
@@ -210,12 +210,12 @@ DATA_t *SeqQueue_tReverseOut(SeqQueue_t *q)//出队
 {
     DATA_t *resultp=0;
     
-    mylocknoinit;
+    mylocknoinit();
     resultp=&(q->data);
     if(SeqQueue_tIsEmpty(q))
     {
         printf("Queue is empty!\n");//判断队列是否为空，空返回NULL
-        myunlock;
+        myunlock();
         return NULL;
     }
     else
@@ -226,7 +226,7 @@ DATA_t *SeqQueue_tReverseOut(SeqQueue_t *q)//出队
         myfree(resultp->point);
         q->head=q->length?q->head:0;
         q->tail=q->length?q->tail:0;
-        myunlock;
+        myunlock();
         return resultp;
     }
 }
@@ -235,24 +235,24 @@ DATA_t *SeqQueue_tReverseOut(SeqQueue_t *q)//出队
 int SeqQueue_tHeadPosnIn(SeqQueue_t *q,DATA_t data,int posn)//队首开始第n个插入队
 {
     
-    mylocknoinit;
+    mylocknoinit();
     DATA_t *pp,*p=q->head;
     if(SeqQueue_tIsFull(q))
     {//判断队列q是否已满，满返回0
         printf("Queue is full!\n");
-        myunlock;
+        myunlock();
         return 0;
     }
     else
     {
         if(posn==0)
         {
-            myunlock;
+            myunlock();
             return SeqQueue_tReverseIn(q,data);
         }
         if(posn==q->length-1)
         {
-            myunlock;
+            myunlock();
             return SeqQueue_tIn(q,data);
         }
         while(posn--)
@@ -268,7 +268,7 @@ int SeqQueue_tHeadPosnIn(SeqQueue_t *q,DATA_t data,int posn)//队首开始第n�
         ((DATA_t *)p->next)->previous=pp;
         p->next=pp;//printf("{0x%08X<-0x%08X->0x%08X}",(int)p->previous,(int)p->point,(int)p->next);
         q->length++;
-        myunlock;
+        myunlock();
         return 1;
     }
 }
@@ -277,31 +277,31 @@ DATA_t *SeqQueue_tHeadPosnOut(SeqQueue_t *q,int posn)////队首开始第n个插�
 {
     DATA_t *resultp=0;
     
-    mylocknoinit;
+    mylocknoinit();
     resultp=&(q->data);
     DATA_t *p=q->head;
     if(SeqQueue_tIsEmpty(q))
     {
         printf("Queue is empty!\n");//判断队列是否为空，空返回NULL
-        myunlock;
+        myunlock();
         return NULL;
     }
     else if(posn>=q->length)
     {
         printf("Pos over the length!\n");
-        myunlock;
+        myunlock();
         return NULL;
     }
     else
     {
         if(posn==0)
         {
-            myunlock;
+            myunlock();
             return SeqQueue_tOut(q);
         }
         if(posn==q->length-1)
         {
-            myunlock;
+            myunlock();
             return SeqQueue_tReverseOut(q);
         }
         while(posn--)
@@ -312,31 +312,31 @@ DATA_t *SeqQueue_tHeadPosnOut(SeqQueue_t *q,int posn)////队首开始第n个插�
         ((DATA_t *)p->next)->previous=p->previous;
         myfree(p);
         q->tail=q->length?q->tail:0;
-        myunlock;
+        myunlock();
         return resultp;
     }
 }
 int SeqQueue_tTailPosnIn(SeqQueue_t *q,DATA_t data,int posn)////队尾开始第n个插入队
 {
     
-    mylocknoinit;
+    mylocknoinit();
     DATA_t *pp,*p=q->tail;
     if(SeqQueue_tIsFull(q))
     {//判断队列q是否已满，满返回0
         printf("Queue is full!\n");
-        myunlock;
+        myunlock();
         return 0;
     }
     else
     {
         if(posn==0)
         {
-            myunlock;
+            myunlock();
             return SeqQueue_tIn(q,data);
         }
         if(posn==q->length-1)
         {
-            myunlock;
+            myunlock();
             return SeqQueue_tReverseIn(q,data);
         }
         while(posn--)
@@ -353,7 +353,7 @@ int SeqQueue_tTailPosnIn(SeqQueue_t *q,DATA_t data,int posn)////队尾开始第n
         p->previous=pp;
         p->previous=pp;//printf("{0x%08X<-0x%08X->0x%08X}",(int)p->previous,(int)p->point,(int)p->next);
         q->length++;
-        myunlock;
+        myunlock();
         return 1;
     }
 }
@@ -362,31 +362,31 @@ DATA_t *SeqQueue_tTailPosnOut(SeqQueue_t *q,int posn)////队尾开始第n个插�
 {
     DATA_t *resultp=0;
     
-    mylocknoinit;
+    mylocknoinit();
     resultp=&(q->data);
     DATA_t *p=q->tail;
     if(SeqQueue_tIsEmpty(q))
     {
         printf("Queue is empty!\n");//判断队列是否为空，空返回NULL
-        myunlock;
+        myunlock();
         return NULL;
     }
     else if(posn>=q->length)
     {
         printf("Pos over the length!\n");
-        myunlock;
+        myunlock();
         return NULL;
     }
     else
     {
         if(posn==0)
         {
-            myunlock;
+            myunlock();
             return SeqQueue_tReverseOut(q);
         }
         if(posn==q->length-1)
         {
-            myunlock;
+            myunlock();
             return SeqQueue_tOut(q);
         }
         while(posn--)
@@ -397,7 +397,7 @@ DATA_t *SeqQueue_tTailPosnOut(SeqQueue_t *q,int posn)////队尾开始第n个插�
         ((DATA_t *)p->next)->previous=p->previous;
         myfree(p);
         q->tail=q->length?q->tail:0;
-        myunlock;
+        myunlock();
         return resultp;
     }
 }
