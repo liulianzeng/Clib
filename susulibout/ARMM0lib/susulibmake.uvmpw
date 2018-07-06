@@ -9,7 +9,6 @@
 
   <project>
     <PathAndName>.\baselib\baselib.uvprojx</PathAndName>
-    <NodeIsActive>1</NodeIsActive>
     <NodeIsExpanded>1</NodeIsExpanded>
     <NodeIsCheckedInBatchBuild>1</NodeIsCheckedInBatchBuild>
   </project>
@@ -27,18 +26,6 @@
   </project>
 
   <project>
-    <PathAndName>.\shuzuquqelib\shuzuquqelib.uvprojx</PathAndName>
-    <NodeIsExpanded>1</NodeIsExpanded>
-    <NodeIsCheckedInBatchBuild>1</NodeIsCheckedInBatchBuild>
-  </project>
-
-  <project>
-    <PathAndName>.\susucjson\susucjson.uvprojx</PathAndName>
-    <NodeIsExpanded>1</NodeIsExpanded>
-    <NodeIsCheckedInBatchBuild>1</NodeIsCheckedInBatchBuild>
-  </project>
-
-  <project>
     <PathAndName>.\susucjsonzhzc\susucjsonzhzc.uvprojx</PathAndName>
     <NodeIsExpanded>1</NodeIsExpanded>
     <NodeIsCheckedInBatchBuild>1</NodeIsCheckedInBatchBuild>
@@ -48,6 +35,12 @@
     <PathAndName>.\susurtc\susurtc.uvprojx</PathAndName>
     <NodeIsExpanded>1</NodeIsExpanded>
     <NodeIsCheckedInBatchBuild>1</NodeIsCheckedInBatchBuild>
+  </project>
+
+  <project>
+    <PathAndName>.\DimMinquqelib\DimMinquqelib.uvprojx</PathAndName>
+    <NodeIsActive>1</NodeIsActive>
+    <NodeIsExpanded>1</NodeIsExpanded>
   </project>
 
 </ProjectWorkspace>

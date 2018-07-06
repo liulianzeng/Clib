@@ -26,7 +26,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <math.h>
-#include <stdlib.h>
+//#include <stdlib.h>
 #include <float.h>
 #include <limits.h>
 #include <ctype.h>
@@ -40,7 +40,7 @@ int heapaddrlen=0;
 */
 void *susu_cjson_malloc(size_t si)
 {
-    return(mymalloc(si));
+    return(mycjsonmalloc(si));
 /*
 	void *p;
 	heapaddrable[heapaddrlen]=1;
@@ -56,7 +56,7 @@ void *susu_cjson_malloc(size_t si)
 }
 void susu_cjson_free(void *p)
 {
-    myfree(p);
+    mycjsonfree(p);
 /*
 	int i;
 	if(p==0)

@@ -3,7 +3,7 @@ cd baselib
 cp susuClib_base.liba ../susulibout/
 cp susuClib_base.h ../susulibout/
 
-cd ../shuzuquqelib
+cd ../DimMinquqelib
 ./mkliba.sh
 cp susuClib_quqe.liba ../susulibout/
 cp susuClib_quqe.h ../susulibout/

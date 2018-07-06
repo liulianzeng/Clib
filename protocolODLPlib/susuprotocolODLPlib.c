@@ -16,24 +16,18 @@ int Setsize_Dynamic_Length_Protocol(unsigned char *__HEADER,int __HEADER_size)
 }
 int Input_Dynamic_Length_Protocol(QUQE_T *Recdata,unsigned char data)
 {
-    DATA_t recdat;
     static int * plen=0;
-    if(!Recdata) Recdata=SeqQueue_Init(MAXPACKLENGTH*2);
-    recdat.cell=data;
-    recdat.ptr=0;
-    SeqQueue_In(Recdata,recdat);
+    if(!Recdata) Recdata=SeqQueue_Init(MAXPACKLENGTH*2,sizeof(unsigned char));
+    SeqQueue_In(Recdata,&data);
     //    susuprotocolODLP_log( "Input_Dynamic_Length_Protocol, len is %d, data is [0x%02X]",SeqQueue_Len(Recdata),data);
     return (int)plen++;
 }
 int ReverseInput_Dynamic_Length_Protocol(QUQE_T *Recdata,unsigned char data)
 {
-    DATA_t recdat;
     static int * plen=0;
     if(!Recdata)
         susuprotocolODLP_log("the quqe is not init!");
-    recdat.cell=data;
-    recdat.ptr=0;
-    SeqQueue_ReverseIn(Recdata,recdat);
+    SeqQueue_ReverseIn(Recdata,&data);
     //    susuprotocolODLP_log( "Input_Dynamic_Length_Protocol, len is %d, data is [0x%02X]",SeqQueue_Len(Recdata),data);
     return (int)plen++;
 }
@@ -43,8 +37,7 @@ int Output_Dynamic_Length_Protocol(QUQE_T *Recdata,unsigned char ** outp,int *le
     static int ODLP=0;
     static int packlength=0;
     int quqelength,i;
-    unsigned char *ptr=0,*pts=0;
-    DATA_t *recdatp;
+    unsigned char *ptr=0,*pts=0,*recdatp=0;
     if(ODLP!=ODLP_Data_Finded)
     {
         quqelength=SeqQueue_Len(Recdata);
@@ -62,7 +55,7 @@ int Output_Dynamic_Length_Protocol(QUQE_T *Recdata,unsigned char ** outp,int *le
             for(i=0;i<DEADLENGTH;i++)
             {
                 recdatp=SeqQueue_Out(Recdata);
-                ptr[i]=recdatp->cell;
+                ptr[i]=*recdatp;
                 //susuprotocolODLP_log("Recdata length is %d , data is [%02X]",SeqQueue_Len(Recdata),ptr[i]);
             }
             if((pts=memmemcustom(ptr,DEADLENGTH,HEADER,HEADER_size))!=0)
@@ -108,7 +101,7 @@ int Output_Dynamic_Length_Protocol(QUQE_T *Recdata,unsigned char ** outp,int *le
                 for(i=0;i<SUBLENSTART+SUBLENLEN;i++)
                 {
                     recdatp=SeqQueue_Out(Recdata);
-                    pts[i]=recdatp->cell;
+                    pts[i]=*recdatp;
                     //susuprotocolODLP_log("Recdata length is %d , data is [%02X]",SeqQueue_Len(Recdata),pts[i]);
                 }
                 packlength=u8dimtoint1(SUBLENLEN&0x80,pts+SUBLENSTART,SUBLENLEN);
@@ -160,7 +153,7 @@ int Output_Dynamic_Length_Protocol(QUQE_T *Recdata,unsigned char ** outp,int *le
                         ODLP=0;
                         break;
                     }
-                    ptr[i]=recdatp->cell;
+                    ptr[i]=*recdatp;
                 }
                 *outp=ptr;
                 susuprotocolODLP_log("outp is 0x%08X ptr is 0x%08X ",(int)outp,(int)ptr);

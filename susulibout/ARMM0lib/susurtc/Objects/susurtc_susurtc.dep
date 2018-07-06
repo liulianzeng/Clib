@@ -1,4 +1,4 @@
 Dependencies for Project 'susurtc', Target 'susurtc': (DO NOT MODIFY !)
-F (..\..\..\susurtc\susuunixrtc.c)(0x5B307BF4)(--c99 -c --cpu Cortex-M0 -g -O0 --apcs=interwork --split_sections -I ..\..\..\susurtc-I.\RTE\_susurtc-ID:\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\1.5.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F070xB-o .\objects\susuunixrtc.o --omf_browse .\objects\susuunixrtc.crf --depend .\objects\susuunixrtc.d)
-I (..\..\..\susurtc\susuunixrtc.h)(0x5B2A30CA)
+F (..\..\..\susurtc\susuunixrtc.c)(0x5B37CE80)(--c99 -c --cpu Cortex-M0 -g -O0 --apcs=interwork --split_sections -I ..\..\..\susurtc-I.\RTE\_susurtc-ID:\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\1.5.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F070xB-o .\objects\susuunixrtc.o --omf_browse .\objects\susuunixrtc.crf --depend .\objects\susuunixrtc.d)
+I (..\..\..\susurtc\susuunixrtc.h)(0x5B38ED04)
 I (D:\Keil_v5\ARM\ARMCC\include\time.h)(0x56FE42D6)

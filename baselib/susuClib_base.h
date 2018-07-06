@@ -9,11 +9,19 @@
 //#define DEBUG_BASE_MEM
 //#define printf
 
+//#define BASE_DEBINFO 2,__FILE__,__LINE__
+//#define MYCALLOC_IN(a,b) mycallocwithinfo(a,b,BASE_DEBINFO)
+//#define MYMALLOC_IN(a) mymallocwithinfo(a,BASE_DEBINFO)
+//#define MYFREE_IN(a) myfreewithinfo(a,BASE_DEBINFO)
+//#define MYFREEALL_IN() myfreeallwithinfo(BASE_DEBINFO)
+
+/*
 #define BASE_DEBINFO 2,__FILE__,__LINE__
-#define MYCALLOC_IN(a,b) mycallocwithinfo(a,b,BASE_DEBINFO)
-#define MYMALLOC_IN(a) mymallocwithinfo(a,BASE_DEBINFO)
-#define MYFREE_IN(a) myfreewithinfo(a,BASE_DEBINFO)
-#define MYFREEALL_IN() myfreeallwithinfo(BASE_DEBINFO)
+#define mycalloc(a,b) mycallocwithinfo(a,b,BASE_DEBINFO)
+#define mymalloc(a) mymallocwithinfo(a,BASE_DEBINFO)
+#define myfree(a) myfreewithinfo(a,BASE_DEBINFO)
+#define myfreeall() myfreeallwithinfo(BASE_DEBINFO)
+*/
 
 //#define mylocknoinit() do{myclock(&lock);}while(0)
 //#define mylock() static int lock;myclock(&lock)
@@ -23,7 +31,7 @@
 //#define mylock static int lock;myasmlock(&lock)
 //#define myunlock do{myasmunlock(&lock);}while(0)
 
-
+extern int DEBUG_BASE_MEM;
 /*****************************需要引入的函数********************************/
 //需要输入的函数和变量--均需要在工程其他的地方实现或者赋初值  均采用extern的方式引入
 //--引入临界区的入口
@@ -101,10 +109,15 @@ extern unsigned char *IntToBcd(long long value,unsigned char n,unsigned char *le
 //根据大小端格式将len个元素的u8的数组dimstart转换成整数返回
 extern int u8dimtoint1(unsigned char littleend,unsigned char * dimstart,unsigned char len);
 //内存管理
-extern void * mycalloc (size_t count,size_t size);
-extern void * mymalloc (size_t size);
-extern void myfree (void *ptr);
-extern void myfreeall (void);
+//extern void * mycalloc (size_t count,size_t size);
+//extern void * mymalloc (size_t size);
+//extern void myfree (void *ptr);
+//extern void myfreeall (void);
+#define BASE_DEBINFO 2,__FILE__,__LINE__
+#define mycalloc(a,b) mycallocwithinfo(a,b,BASE_DEBINFO)
+#define mymalloc(a) mymallocwithinfo(a,BASE_DEBINFO)
+#define myfree(a) myfreewithinfo(a,BASE_DEBINFO)
+#define myfreeall() myfreeallwithinfo(BASE_DEBINFO)
 //内存管理内部的调用,也可以自己编写调用,目前指定的参数为2个扩展参数,第一个扩展为char * ,第二个扩展为int.
 extern void * mycallocwithinfo (size_t count,size_t size,int gs,...);
 extern void * mymallocwithinfo (size_t size,int gs,...);

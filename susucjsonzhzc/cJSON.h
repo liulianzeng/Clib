@@ -63,9 +63,24 @@ typedef struct cJSON_Hooks {
 /*****************************需要引入的函数********************************/
 //需要输入的函数和变量--均需要在工程其他的地方实现或者赋初值  均采用extern的方式引入
 
-extern void * mycalloc (size_t count,size_t size);
-extern void * mymalloc (size_t size);
-extern void myfree (void *ptr);
+extern void *mycjsonmalloc(size_t si);
+extern void mycjsonfree(void *p);
+
+/*
+#define BASE_DEBINFO 2,__FILE__,__LINE__
+#define mycalloc(a,b) mycallocwithinfo(a,b,BASE_DEBINFO)
+#define mymalloc(a) mymallocwithinfo(a,BASE_DEBINFO)
+#define myfree(a) myfreewithinfo(a,BASE_DEBINFO)
+#define myfreeall() myfreeallwithinfo(BASE_DEBINFO)
+//内存管理内部的调用,也可以自己编写调用,目前指定的参数为2个扩展参数,第一个扩展为char * ,第二个扩展为int.
+extern void * mycallocwithinfo (size_t count,size_t size,int gs,...);
+extern void * mymallocwithinfo (size_t size,int gs,...);
+extern void myfreewithinfo (void *ptr,int gs,...);
+extern void myfreeallwithinfo(int gs,...);
+#define mycjsonmalloc(a) mymallocwithinfo(a,BASE_DEBINFO)
+#define mycjsonfree(a) myfreewithinfo(a,BASE_DEBINFO)
+*/
+
 /*  引入函数的默认写法   请写到自己的C函数中
 void * mycalloc (size_t count,size_t size)
 {
@@ -153,9 +168,8 @@ The item->next and ->prev pointers are always zero on return from Duplicate. */
 extern cJSON *cJSON_ParseWithOpts(const char *value,const char **return_parse_end,int require_null_terminated);
 
 extern void cJSON_Minify(char *json);
-void *susu_cjson_malloc(size_t si);
-void susu_cjson_free(void *p);
-
+extern void *susu_cjson_malloc(size_t si);
+extern void susu_cjson_free(void *p);
 
 /* Macros for creating things quickly. */
 #define cJSON_AddNullToObject(object,name)		cJSON_AddItemToObject(object, name, cJSON_CreateNull())

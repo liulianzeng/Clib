@@ -33,10 +33,16 @@ typedef struct
 //需要输入的函数和变量--均需要在工程其他的地方实现或者赋初值  均采用extern的方式引入
 
 //内存管理
-extern void * mycalloc (size_t count,size_t size);
-extern void * mymalloc (size_t size);
-extern void myfree (void *ptr);
-extern void myfreeall (void);
+#define BASE_DEBINFO 2,__FILE__,__LINE__
+#define mycalloc(a,b) mycallocwithinfo(a,b,BASE_DEBINFO)
+#define mymalloc(a) mymallocwithinfo(a,BASE_DEBINFO)
+#define myfree(a) myfreewithinfo(a,BASE_DEBINFO)
+#define myfreeall() myfreeallwithinfo(BASE_DEBINFO)
+//内存管理内部的调用,也可以自己编写调用,目前指定的参数为2个扩展参数,第一个扩展为char * ,第二个扩展为int.
+extern void * mycallocwithinfo (size_t count,size_t size,int gs,...);
+extern void * mymallocwithinfo (size_t size,int gs,...);
+extern void myfreewithinfo (void *ptr,int gs,...);
+extern void myfreeallwithinfo(int gs,...);
 
 extern void mylocknoinit(void);
 extern void mylock(void);

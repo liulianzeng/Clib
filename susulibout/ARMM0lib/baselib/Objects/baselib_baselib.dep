@@ -1,6 +1,6 @@
 Dependencies for Project 'baselib', Target 'baselib': (DO NOT MODIFY !)
-F (..\..\..\baselib\susuClib_base.c)(0x5B378D0F)(--c99 -c --cpu Cortex-M0 -g -O0 --apcs=interwork --split_sections -I ..\..\..\baselib-I.\RTE\_baselib-ID:\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\1.5.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F070xB-o .\objects\susuclib_base.o --omf_browse .\objects\susuclib_base.crf --depend .\objects\susuclib_base.d)
-I (..\..\..\baselib\susuClib_base.h)(0x5B378CBE)
+F (..\..\..\baselib\susuClib_base.c)(0x5B3B3A34)(--c99 -c --cpu Cortex-M0 -g -O0 --apcs=interwork --split_sections -I ..\..\..\baselib-I.\RTE\_baselib-ID:\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\1.5.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F070xB-o .\objects\susuclib_base.o --omf_browse .\objects\susuclib_base.crf --depend .\objects\susuclib_base.d)
+I (..\..\..\baselib\susuClib_base.h)(0x5B3B3A34)
 I (D:\Keil_v5\ARM\ARMCC\include\string.h)(0x56FE42DE)
 I (D:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x56FE42DE)
 I (D:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x56FE42E0)

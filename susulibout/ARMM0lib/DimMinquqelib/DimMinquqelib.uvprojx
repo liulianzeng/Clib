@@ -7,7 +7,7 @@
 
   <Targets>
     <Target>
-      <TargetName>shuzuquqelib</TargetName>
+      <TargetName>DimMinquqelib</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <pCCUsed>5060183::V5.06 update 2 (build 183)::ARMCC</pCCUsed>
@@ -336,7 +336,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\shuzuquqelib</IncludePath>
+              <IncludePath>..\..\..\DimMinquqelib</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -383,7 +383,7 @@
             <File>
               <FileName>susuClib_quqe.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\shuzuquqelib\susuClib_quqe.c</FilePath>
+              <FilePath>..\..\..\DimMinquqelib\susuClib_quqe.c</FilePath>
             </File>
           </Files>
         </Group>

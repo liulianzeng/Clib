@@ -3,7 +3,7 @@
 
 static int lock=0;
 static char StrNULL[]="";
-
+int DEBUG_BASE_MEM=0;
 void myclock(int *lock)
 {
     int tmp = 1;
@@ -486,7 +486,7 @@ typedef struct Malloc_Point_t
     void *NextPoint;
     void *Data;
 }Malloc_t;
-
+/*
 void * mycalloc (size_t count,size_t size)
 {
 	return MYCALLOC_IN(count,size);
@@ -502,7 +502,7 @@ void myfree (void *ptr)
 void myfreeall (void)
 {
 	MYFREEALL_IN();
-}
+}*/
 static Malloc_t MaStart={0,NULL,NULL};
 static Malloc_t *MaP=&MaStart;
 static int mymallocTimes=0;
@@ -551,9 +551,9 @@ void * mycallocwithinfo (size_t count,size_t size,int gs,...)
     Mar=MaP;
     MaP=MaP->NextPoint;
     MaP->Data=NULL;
-#ifdef DEBUG_BASE_MEM
+if (DEBUG_BASE_MEM)
     printf("<-<-<-<-<-<-<-<-|------%s-%d---mymalloc Point is 0x%X size %d Data is 0x%X Times is %d\n",info,line,(int)Mar->Point,Mar->size,(int)Mar->Data,++mymallocTimes);
-#endif
+
     myunlock();
     return Mar->Data;
 
@@ -602,9 +602,9 @@ void * mymallocwithinfo (size_t size,int gs,...)
     Mar=MaP;
     MaP=MaP->NextPoint;
     MaP->Data=NULL;
-#ifdef DEBUG_BASE_MEM
+if (DEBUG_BASE_MEM)
     printf("<-<-<-<-<-<-<-<-|------%s-%d---mymalloc Point is 0x%X size %d Data is 0x%X Times is %d\n",info,line,(int)Mar->Point,Mar->size,(int)Mar->Data,++mymallocTimes);
-#endif
+
     myunlock();
     return Mar->Data;
 
@@ -637,9 +637,9 @@ void myfreewithinfo(void *ptr,int gs,...)
             MaPf->Data=NULL;
             Free_input(MaPf->Point);
             //MaPf->Point=NULL;
-#ifdef DEBUG_BASE_MEM
+if (DEBUG_BASE_MEM)
             printf("->->->->->->->->|------%s-%d---myfree  Point is 0x%X size is size %d Data is 0x%X Times is %d\n",info,line,(int)PFrent.Point,PFrent.size,(int)PFrent.Data,++myfreeTimes);
-#endif
+
            break;
         }
         MaPfBak=MaPf;
@@ -679,9 +679,9 @@ void myfreeallwithinfo(int gs,...)
             MaPf->Data=NULL;
        		Free_input(MaPf->Point);
             MaPf->Point=NULL;
-#ifdef DEBUG_BASE_MEM
+if (DEBUG_BASE_MEM)
 			printf("============->->->->->->->->|------%s-%d---allmyfree  Point is 0x%X size is size %d Data is 0x%X Times is %d\n",info,line,(int)PFrent.Point,PFrent.size,(int)PFrent.Data,++myfreeTimes);
-#endif
+
 		}
 	}
 	MaPfBak=&MaStart;

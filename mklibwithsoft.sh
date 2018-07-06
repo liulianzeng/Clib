@@ -8,7 +8,7 @@ $PATHAR rcs -o susuClib_base.liba susuClib_base.o
 cp susuClib_base.liba ../susulibout/
 cp susuClib_base.h ../susulibout/
 
-cd ../shuzuquqelib
+cd ../DimMinquqelib
 $PATHCC -c susuClib_quqe.c -o susuClib_quqe.o
 $PATHAR rcs -o susuClib_quqe.liba susuClib_quqe.o
 cp susuClib_quqe.liba ../susulibout/
@@ -43,7 +43,7 @@ $PATHCC -c cJSON.c -o cJSON.o
 $PATHCC -c cJSON_Utils.c -o cJSON_Utils.o
 $PATHAR rcs -o cJSON.liba cJSON.o cJSON_Utils.o
 cp cJSON.liba ../susulibout/
-cp cJSON.h ../susulibout/
+cp *.h ../susulibout/
 
 cd ../susurtc
 $PATHCC -c susuunixrtc.c -o susuunixrtc.o
