@@ -49,7 +49,7 @@ extern int DEADLENGTH;// (2+12+1+2+1)         //最短包长
 extern int SUBLENSTART;// (2+12+1)            //变长长度的起始位
 extern int SUBLENLEN;// (2)                   //变长长度的字节数,默认为大端模式,若是小端模式,请使用(变长长度的字节数|0x80)
 extern int MAXPACKLENGTH;// 300               //指定最长的协议长度  队列的默认长度将使用 本长度的 2倍数值  在不提前初始化的时候
-
+extern int FIXEDLEN;//0						  //当变长长度中包含固定长度的数据时,该数据用来做调整,该值是可变长度中包含的固定数据的长度
 /*  引入函数的默认写法   请写到自己的C函数中
 void * mycalloc (size_t count,size_t size)
 {
@@ -94,14 +94,61 @@ int SeqQueue_Len(SeqQueue_t *q)//返回队列长度
 /*****************************需要输出的函数********************************/
 //需要输出的函数  变量的输出必采用extern的方式
 
-int Setsize_Dynamic_Length_Protocol(unsigned char *__HEADER,int __HEADER_size);
-extern int Input_Dynamic_Length_Protocol(QUQE_T *Recdata,unsigned char data);
-extern int Output_Dynamic_Length_Protocol(QUQE_T *Recdata,unsigned char ** outp,int *len);
-
-
+int Setsize_Dynamic_Length_Protocol(unsigned char *__HEADER,int __HEADER_size);//旧版初始化   协议头初始化 参数 协议头数组 协议头数组长度
+extern int Init_Dynamic_Protocol_Header(unsigned char *__HEADER,int __HEADER_size);//协议头初始化 参数 协议头数组 协议头数组长度
+extern int Input_Dynamic_Length_Protocol(QUQE_T *Recdata,unsigned char data);//输入协议数据  参数  接收数据的队列  接受的数据(字节)
+extern int Output_Dynamic_Length_Protocol(QUQE_T *Recdata,unsigned char ** outp,int *len);//输出协议函数 当返回值为ODLP_Data_Finded 0x03时表示已经获得完整的一包数据,若想要获取完整的一包数据,至少要调用四次本函数,参数 接收数据的队列 返回完整的一包数据的指针的指针,返回完整的一包数据的长度  返回的数据是使用mymalloc获得的内存  处理完成后必须使用myfree释放
 
 /*//使用示例
- 
+ //初始化处理程序
+	udpreceivedq=SeqQueue_tInit(MAXPACKLENGTHQ,sizeof(uint8_t));//队列初始化  队列的默认长度将使用 本长度的 2倍数值  在不提前初始化的时候  这里初始化可以避免使用2倍MAXPACKLENGTH长度 但2倍长度也很合适
+	Init_Dynamic_Protocol_Header(HEADER,sizeof(HEADER));
+//	Setsize_Dynamic_Length_Protocol(HEADER,sizeof(HEADER));//旧版初始化  协议头数组
+ //接收数据的回调处理程序
+ AppSocketReceiveProc(gsSTSysCtrol.FdUdp,data,len);
+mylock();//尽量使用锁  防止数据并发执行
+if(data)//如果获取的数据有数据
+for(int i=0;i<len;i++)//将数据加入到队列中
+{
+		Input_Dynamic_Length_Protocol(udpreceivedq,data[i]);//将数据加入到队列中  其实就是一个入队列的操作 
+}
+myunlock();
+ //接收数据的处理程序
+ typedef struct
+{
+    short cell;
+    void * ptr;
+}DATA_t;
+int len;
+int ODLP_Stat=0;
+unsigned char * procp;
+unsigned char ** proc=&procp;
+DATA_t recdat;
+int TimesofODLP=0;
+
+if(SeqQueue_Len(udpreceivedq))//若收到数据
+for(int i=0;i<4;i++)
+{
+	ODLP_Stat=Output_Dynamic_Length_Protocol(udpreceivedq,proc,&len);//判断输出数据 至少要判断四次以上
+	if(ODLP_Stat==ODLP_Data_Finded)//如果收到了完整的数据
+	{
+		recdat.cell=(uint16_t)len;//获取数据长度
+		recdat.ptr=*proc;//获取数据本体
+		myapp_log( "len is %d",len);//打印长度
+		SeqQueue_In(udpprocq,(unsigned char *)&recdat);//将获得的数据包压入消息处理队列
+		TimesofODLP=0;//获取的次数清空
+	}
+	else if(TimesofODLP++>10)//如果获取的次数超过了10次
+	{
+		TimesofODLP=0;//清空获取的数据次数
+		for(i=0;i<SeqQueue_Len(udpreceivedq);i++)//清空接收 数据的队列    十次已经说明数据的错误
+		{
+			SeqQueue_Out(udpreceivedq);
+		}
+		myapp_log( "Output_Dynamic_Length_Protocol, ODLP_Stat is %d",(int)ODLP_Stat);
+		myapp_log( "not value data in udpreceivedq ,empty it!!");
+	}
+}
  */
 
 

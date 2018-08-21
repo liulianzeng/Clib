@@ -43,7 +43,8 @@ extern void * Calloc_input (size_t count,size_t size);
 extern void * Malloc_input (size_t size);
 extern void Free_input (void *ptr);
 //--引入打印日志的入口
-extern int print_base(char * info,...);
+//extern int print_base(char * info,...);
+//extern int sprint_base(char *buffer,char * info,...);
 /*  引入函数的默认写法   请写到自己的C函数中
 //--引入临界区的入口
 void mylocknoinit(void)
@@ -82,7 +83,16 @@ int print_base(char * info,...)
 	va_end(ap);
  return ret;
 }
-*/
+int sprint_base(char *buffer,char * info,...)
+{
+	int ret;
+	va_list ap;
+
+	va_start(ap, info);
+	ret = vsprintf(buffer,info, ap);
+	va_end(ap);
+ return ret;
+}*/
 /*****************************需要输出的函数********************************/
 //需要输出的函数  变量的输出必采用extern的方式
 //超简单临界区锁的实现,不是哪里都能用的
@@ -114,7 +124,7 @@ extern int u8dimtoint1(unsigned char littleend,unsigned char * dimstart,unsigned
 //extern void myfree (void *ptr);
 //extern void myfreeall (void);
 #define BASE_DEBINFO 2,__FILE__,__LINE__
-#define mycalloc(a,b) mycallocwithinfo(a,b,BASE_DEBINFO)
+#define mycalloc(a,b) mycallocwithinfo(a,b,BASE_DEBINFO)  //请注意在某些芯片或者编译器上  需要首先申请一块儿内存  并永不释放  比如EMW110
 #define mymalloc(a) mymallocwithinfo(a,BASE_DEBINFO)
 #define myfree(a) myfreewithinfo(a,BASE_DEBINFO)
 #define myfreeall() myfreeallwithinfo(BASE_DEBINFO)
@@ -129,5 +139,6 @@ extern int hexstrtoarrayu8(char *hexstr,void *array,int len);
 extern char * arrayu8tohexstr(void *array,int len,char *hexstr);
 extern void *memmemcustom(void *start, unsigned int s_len, void *find, unsigned int f_len);//类似于strstr的数组查找子数组的函数
 extern void printdim(char *header,void *dim,int len);//打印数组
+extern unsigned short CRC16Calculate(unsigned char * b, unsigned short startIndex, unsigned short endIndex); 
 #endif
 

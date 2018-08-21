@@ -51,7 +51,7 @@ void printdim(char *header,void *dim,int len)
         sprintf(dispp," %02X",((unsigned char *)dim)[j]);
         dispp+=strlen(" FF");
     }
-    printf("%s\n",dispstart);
+    printf(" %s\n",dispstart);
     myfree(dispstart);
     myunlock();
 }
@@ -183,7 +183,7 @@ int StringToInt(char *strSTI)
 
 
 /* 
- * 将字符转换为数值 
+ * 将字符转换为数值
  * */  
 int c2i(char ch)  
 {  
@@ -219,7 +219,7 @@ int c2i(char ch)
 }  
   
 /* 
- * 功能：将十六进制字符串转换为整型(int)数值 
+ * 功能：将十六进制字符串转换为整型(int)数值
  * */  
 int hex2dec(char *hex)  
 {  
@@ -230,23 +230,23 @@ int hex2dec(char *hex)
         int bits;  
         int i;  
           
-        // 此例中 hex = "1de" 长度为3, hex是main函数传递的  
+        // 此例中 hex = "1de" 长度为3, hex是main函数传递的
         len = strlen(hex);  
   
         for (i=0, temp=0; i<len; i++, temp=0)  
         {  
-                // 第一次：i=0, *(hex + i) = *(hex + 0) = '1', 即temp = 1  
-                // 第二次：i=1, *(hex + i) = *(hex + 1) = 'd', 即temp = 13  
-                // 第三次：i=2, *(hex + i) = *(hex + 2) = 'd', 即temp = 14  
+                // 第一次：i=0, *(hex + i) = *(hex + 0) = '1', 即temp = 1
+                // 第二次：i=1, *(hex + i) = *(hex + 1) = 'd', 即temp = 13
+                // 第三次：i=2, *(hex + i) = *(hex + 2) = 'd', 即temp = 14
                 temp = c2i( *(hex + i) );  
-                // 总共3位，一个16进制位用 4 bit保存  
-                // 第一次：'1'为最高位，所以temp左移 (len - i -1) * 4 = 2 * 4 = 8 位  
-                // 第二次：'d'为次高位，所以temp左移 (len - i -1) * 4 = 1 * 4 = 4 位  
-                // 第三次：'e'为最低位，所以temp左移 (len - i -1) * 4 = 0 * 4 = 0 位  
+                // 总共3位，一个16进制位用 4 bit保存
+                // 第一次：'1'为最高位，所以temp左移 (len - i -1) * 4 = 2 * 4 = 8 位
+                // 第二次：'d'为次高位，所以temp左移 (len - i -1) * 4 = 1 * 4 = 4 位
+                // 第三次：'e'为最低位，所以temp左移 (len - i -1) * 4 = 0 * 4 = 0 位
                 bits = (len - i - 1) * 4;  
                 temp = temp << bits;  
   
-                // 此处也可以用 num += temp;进行累加  
+                // 此处也可以用 num += temp;进行累加
                 num = num | temp;  
         }  
   
@@ -283,7 +283,7 @@ char * IntToStr(int value,char *n,char *str)
 {
     mylock();
 	memset(str,0,15);
-	sprintf(str,(const char * )n,value);
+	sprintf(str,n,value);
     myunlock();
 	return str;
 }
@@ -423,7 +423,7 @@ unsigned char *IntToBcd(long long value,unsigned char n,unsigned char *len,char 
 unsigned char *SearchKey(unsigned char *source,unsigned char len,unsigned char *dest)
 {
   mylock();
-	unsigned char de[5],i,j;
+	unsigned char de[5],i,j=0xff;
 	for(i=0;i<5;i++)
 		if(dest[i]!=0)
         {
@@ -580,7 +580,7 @@ void * mymallocwithinfo (size_t size,int gs,...)
 		MaStart.Point=&MaStart;
         MaStart.size=sizeof(Malloc_t);
         MaP=&MaStart;
-//        printf("xxxxxxxxxxxxxxxxxxxxxxxxxxx======%s====first get the mem!\n",info);
+        printf("xxxxxxxxxxxxxxxxxxxxxxxxxxx======%s====first get the mem!\n",info);
     }
     p=Malloc_input(size);
     if(p==NULL)
@@ -625,9 +625,11 @@ void myfreewithinfo(void *ptr,int gs,...)
     }
     Malloc_t *MaPfBak=NULL;
     Malloc_t PFrent;
-	int Flag=0;
-    for(Malloc_t *MaPf=&MaStart;MaPf->Data!=NULL;MaPf=MaPf->NextPoint)
+	int Flag=0,i=0;
+    for(Malloc_t *MaPf=&MaStart;MaPf->Data!=NULL;MaPf=MaPf->NextPoint,i++)
     {
+        if (DEBUG_BASE_MEM==2)
+            printf("-%s-%d-index %d -- Point is 0x%X size is size %d Data is 0x%X \n",info,line,i,(int)MaPf->Point,MaPf->size,(int)MaPf->Data);
         if((MaPf->Data)==ptr)
         {
             MaPfBak->NextPoint=MaPf->NextPoint;
@@ -637,12 +639,12 @@ void myfreewithinfo(void *ptr,int gs,...)
             MaPf->Data=NULL;
             Free_input(MaPf->Point);
             //MaPf->Point=NULL;
-if (DEBUG_BASE_MEM)
+            if (DEBUG_BASE_MEM)
             printf("->->->->->->->->|------%s-%d---myfree  Point is 0x%X size is size %d Data is 0x%X Times is %d\n",info,line,(int)PFrent.Point,PFrent.size,(int)PFrent.Data,++myfreeTimes);
 
            break;
         }
-        MaPfBak=MaPf;
+            MaPfBak=MaPf;
     }
     if(Flag==0)
         printf("||||||||||||||||||||||||||||||%s|%d|||ptr = 0x%X Address Can not be free,because it has not malloc.myfree Run Times is -|- %d\n",info,line,(int)ptr,++myfreeTimes);
@@ -788,3 +790,28 @@ void *memmemcustom(void *start, unsigned int s_len, void *find, unsigned int f_l
     myunlock();
     return(NULL);
 }
+unsigned short CRC16Calculate(unsigned char * b, unsigned short startIndex, unsigned short endIndex) 
+{
+	mylocknoinit();
+	unsigned short crc = 0xFFFF;
+	unsigned short j,i;
+	for (j = startIndex ; j <= endIndex; j++) 
+	{
+		crc = crc ^ ((b[j] + 256) % 256) ;
+		for (i = 0; i < 8; i++) 
+		{
+			if ((crc & 0x0001) == 0x0001) 
+			{
+				crc = (crc >> 1) ^ 0xA001;
+			} 
+			else 
+			{
+				crc = crc >> 1;
+			}
+		}
+	}
+	myunlock();
+	return crc;
+}
+
+

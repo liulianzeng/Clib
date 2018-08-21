@@ -37,8 +37,8 @@ extern void RTC_SetCounter(long CounterValue);
 extern time_t Time_GetUnixTime(void);
 extern void Time_SetCalendarTime(struct tm t);
 extern unsigned long get_fattime (void);
-struct tm DTStrToDataTime(const char *Strtmp);
-
+extern struct tm DTStrToDataTime(const char *Strtmp);
+extern char *DataTimeToDTStr(struct tm timetmp);
 
 
 /*//使用示例

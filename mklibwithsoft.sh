@@ -29,8 +29,8 @@ cp susuprotocolODLPlib.h ../susulibout/
 cd ../lianbiaoquqelib
 $PATHCC -c susuClib_quqe.c -o susuClib_quqe.o
 $PATHAR rcs -o susuClib_quqe.liba susuClib_quqe.o
-cp susuClib_quqe.liba ../susulibout/
-cp susuClib_quqe.h ../susulibout/
+#cp susuClib_quqe.liba ../susulibout/
+#cp susuClib_quqe.h ../susulibout/
 
 cd ../susucjson
 $PATHCC -c cJSON.c -o cJSON.o

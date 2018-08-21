@@ -8,6 +8,10 @@
 
 static unsigned char *HEADER;
 static int HEADER_size=0;
+int Init_Dynamic_Protocol_Header(unsigned char *__HEADER,int __HEADER_size)
+{
+	return Setsize_Dynamic_Length_Protocol(__HEADER,__HEADER_size);
+}
 int Setsize_Dynamic_Length_Protocol(unsigned char *__HEADER,int __HEADER_size)
 {
     HEADER=__HEADER;
@@ -104,7 +108,7 @@ int Output_Dynamic_Length_Protocol(QUQE_T *Recdata,unsigned char ** outp,int *le
                     pts[i]=*recdatp;
                     //susuprotocolODLP_log("Recdata length is %d , data is [%02X]",SeqQueue_Len(Recdata),pts[i]);
                 }
-                packlength=u8dimtoint1(SUBLENLEN&0x80,pts+SUBLENSTART,SUBLENLEN);
+                packlength=u8dimtoint1(SUBLENLEN&0x80,pts+SUBLENSTART,SUBLENLEN)-FIXEDLEN;
                 susuprotocolODLP_log( "Output_Dynamic_Length_Protocol DEADLENGTH is %d packlength is %d a 0x%02X b 0x%02X",DEADLENGTH,packlength,*(uint8_t *)(pts+SUBLENSTART),*(uint8_t *)(pts+SUBLENSTART+1));
                 if(packlength<=MAXPACKLENGTH-DEADLENGTH)
                 {
